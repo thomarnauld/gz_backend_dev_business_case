@@ -9,5 +9,5 @@ cd server && yarn start --port 3000
 
 ** START FRONT **
 cd gz_webtracker && ng serve --port 42000
-cd gz_webdriver && ng serve --port 42000
-cd gz_webadmin && ng serve --port 42000
+cd gz_webdriver && ng serve --port 42001
+cd gz_webadmin && ng serve --port 42002
