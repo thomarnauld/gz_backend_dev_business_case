@@ -1,0 +1,125 @@
+<div class="content">
+
+    <!-- Packages List -->
+    <div class="fdr" *ngIf="module === 'home'">
+        <h2>Packages List:</h2>
+        <button style="background-color: rgb(120, 165, 90);" (click)="showForm(null, 'package', 'create')">Create Package</button>
+    </div>
+
+    <div *ngIf="module === 'home' && package.length > 0">
+        <table *ngIf="package">
+            <thead>
+                <tr>
+                    <th>Package ID</th>
+                    <th>Active Delivery</th>
+                    <th>Description</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of package">
+                    <td>{{ item.package_id }}</td>
+                    <td>{{ item.active_delivery_id }}</td>
+                    <td>{{ item.description }}, Weight: {{ item.weight }}, Dimensions: {{ item.width }}cm x {{ item.height }}cm x {{ item.depth }}cm</td>
+                    <td>{{ item.from_name }}, {{ item.from_address }} ({{ item.from_location.lat }}, {{ item.from_location.lng }})</td>
+                    <td>{{ item.to_name }}, {{ item.to_address }} ({{ item.to_location.lat }}, {{ item.to_location.lng }})</td>
+                    <td>
+                        <div class="fdr">
+                            <button style="background-color: rgb(242, 156, 56);" (click)="showForm(item, 'package', 'update')">Update</button>
+                            <button style="background-color: rgb(209, 109, 106);" (click)="confirmDelete(item, 'package')">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div *ngIf="!package">
+            <p>No packages found.</p>
+        </div>
+    </div>
+
+    <!-- Delivery List -->
+    <div class="fdr" *ngIf="module === 'home'">
+        <h2>Delivery List:</h2>
+        <button style="background-color: rgb(120, 165, 90);" (click)="showForm(null, 'delivery', 'create')">Create Delivery</button>
+    </div>
+
+    <div *ngIf="module === 'home' && delivery.length > 0">
+        <table *ngIf="delivery">
+            <thead>
+                <tr>
+                    <th>Delivery ID</th>
+                    <th>Package ID</th>
+                    <th>Pickup Time</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Location</th>
+                    <th>Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of delivery">
+                    <td>{{ item.delivery_id }}</td>
+                    <td>{{ item.package_id }}</td>
+                    <td>{{ item.pickup_time }}</td>
+                    <td>{{ item.start_time }}</td>
+                    <td>{{ item.end_time }}</td>
+                    <td>{{ item.location.lat }}, {{ item.location.lng }}</td>
+                    <td>
+                        <div class="fdr">
+                            <button [disabled]="true" style="background-color: rgb(220, 220, 220);" (click)="showForm(item, 'delivery', 'update')">Update</button>
+                            <button style="background-color: rgb(209, 109, 106);" (click)="confirmDelete(item, 'delivery')">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div *ngIf="!delivery">
+            <p>No deliveries found.</p>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <div *ngIf="module === 'form' && Form && f && controlOrder.length > 0">
+        <form [formGroup]="Form" (ngSubmit)="onSubmit()">
+            <div *ngFor="let controlName of controlOrder">
+                <div style="display: flex;">
+                    <label [for]="controlName.id">{{ controlName.id | titlecase }} {{ controlName.readonly ? '' : '*' }}</label>
+                    <div>
+                        <input *ngIf="controlName.type === 'input'" [type]="getInputType(controlName.id)" [formControlName]="controlName.id" [id]="controlName.id" [readOnly]="controlName.readonly"
+                            [style.background-color]="controlName.readonly ? 'rgb(235,235,235)' : 'rgb(255,255,255)'">
+                        <div *ngIf="controlName.type === 'select'">
+                            <select *ngFor="let item of package" [formControlName]="controlName.id" [id]="controlName.id">
+                                <option value="{{ item.package_id }}">{{ item.description }}</option>
+                            </select>
+                        </div>
+                        <div *ngIf="Form.get(controlName.id)?.invalid && (Form.get(controlName.id)?.dirty || Form.get(controlName.id)?.touched)" class="error">
+                            <div style="color: firebrick;" *ngIf="Form.get(controlName.id)?.errors?.['required']">{{ controlName.id | titlecase }} is required.</div>
+                            <div style="color: firebrick;" *ngIf="Form.get(controlName.id)?.errors?.['min']">{{ controlName.id | titlecase }} should not be less than {{
+                                Form.get(controlName.id)?.errors?.['min']['min'] }}.</div>
+                            <div style="color: firebrick;" *ngIf="Form.get(controlName.id)?.errors?.['max']">{{ controlName.id | titlecase }} should not be greater than {{
+                                Form.get(controlName.id)?.errors?.['max']['max'] }}.</div>
+                            <div style="color: firebrick;" *ngIf="Form.get(controlName.id)?.errors?.['invalidGeolocation']">{{ controlName.id | titlecase }} is not valid (x, y).</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p style="color: firebrick; margin-left: 10rem; width: 26rem;">{{ errorMessage }}</p>
+            <div style="display: flex; margin-left: 10rem;">
+                <button type="submit" style="background-color: rgb(120, 165, 90);">{{ operation }}</button>
+                <button style="background-color: rgb(242, 156, 56);" (click)="changeModule('home')">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Delete Confirmation -->
+    <div *ngIf="module === 'delete' && dataSelected && table">
+        <p style="text-align: center;">{{ 'Confirm delete of the ' + table + '?' }}</p>
+        <div style="display: flex;">
+            <button type="submit" style="background-color: rgb(209, 109, 106);" (click)="deleteItem(dataSelected)">Confirm</button>
+            <button style="background-color: rgb(242, 156, 56);" (click)="changeModule('home')">Cancel</button>
+        </div>
+    </div>
+
+</div>

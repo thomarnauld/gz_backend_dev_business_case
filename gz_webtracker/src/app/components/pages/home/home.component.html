@@ -1,0 +1,38 @@
+<div class="content">
+    <div class="">
+        <div *ngIf="package">
+            <h2>Package Details</h2>
+            <p><B>Package ID</B>: {{ package.package_id }}</p>
+            <p><B>Active Delivery ID</B>: {{ package.active_delivery_id }}</p>
+            <p><B>Description</B>: {{ package.description }}</p>
+            <p><B>Weight</B>: {{ package.weight }} grams</p>
+            <p><B>Dimensions</B>: {{ package.width }}cm x {{ package.height }}cm x {{ package.depth }}cm</p>
+            <p><B>From</B>: {{ package.from_name }}, {{ package.from_address }} ({{ package.from_location.lat }}, {{ package.from_location.lng }})</p>
+            <p><B>To</B>: {{ package.to_name }}, {{ package.to_address }} ({{ package.to_location.lat }}, {{ package.to_location.lng }})</p>
+        </div>
+
+        <div *ngIf="delivery">
+            <h2>Delivery Details</h2>
+            <p><B>Delivery ID</B>: {{ delivery.delivery_id }}</p>
+            <p><B>Package ID</B>: {{ delivery.package_id }}</p>
+            <p><B>Pickup Time</B>: {{ delivery.pickup_time | date:'medium' }}</p>
+            <p><B>Start Time</B>: {{ delivery.start_time | date:'medium' }}</p>
+            <p><B>End Time</B>: {{ delivery.end_time | date:'medium' }}</p>
+            <p><B>Location</B>: ({{ delivery.location.lat }}, {{ delivery.location.lng }})</p>
+            <p><B>Status</B>: {{ delivery.status }}</p>
+        </div>
+
+        <div *ngIf="!package">
+            <p>No packages found.</p>
+        </div>
+    </div>
+    <div class="map-container">
+        <div *ngIf="package">
+            <google-map width="400px" height="400px" [center]="{lat: package.from_location.lat, lng: package.from_location.lng }" [zoom]="10">
+                <map-marker *ngIf="delivery" [position]="{lat: delivery.location.lat, lng: delivery.location.lng }" title="Marker Title" [options]="{icon: iconC}"></map-marker>
+                <map-marker [position]="{lat: package.from_location.lat, lng: package.from_location.lng }" title="Marker Title" [options]="{icon: iconA}"></map-marker>
+                <map-marker [position]="{lat: package.to_location.lat, lng: package.to_location.lng }" title="Marker Title" [options]="{icon: iconB}"></map-marker>
+            </google-map>
+        </div>
+    </div>
+</div>

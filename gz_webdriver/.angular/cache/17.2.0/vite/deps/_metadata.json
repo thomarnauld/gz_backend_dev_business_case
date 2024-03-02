@@ -1,0 +1,67 @@
+{
+  "hash": "6dc89bca",
+  "configHash": "16fbb718",
+  "lockfileHash": "7f0a9ce7",
+  "browserHash": "b73e855c",
+  "optimized": {
+    "@angular/common": {
+      "src": "../../../../../node_modules/@angular/common/fesm2022/common.mjs",
+      "file": "@angular_common.js",
+      "fileHash": "0c3e59a3",
+      "needsInterop": false
+    },
+    "@angular/common/http": {
+      "src": "../../../../../node_modules/@angular/common/fesm2022/http.mjs",
+      "file": "@angular_common_http.js",
+      "fileHash": "d02acc0a",
+      "needsInterop": false
+    },
+    "@angular/core": {
+      "src": "../../../../../node_modules/@angular/core/fesm2022/core.mjs",
+      "file": "@angular_core.js",
+      "fileHash": "5e44f04b",
+      "needsInterop": false
+    },
+    "@angular/google-maps": {
+      "src": "../../../../../node_modules/@angular/google-maps/fesm2022/google-maps.mjs",
+      "file": "@angular_google-maps.js",
+      "fileHash": "c56641ff",
+      "needsInterop": false
+    },
+    "@angular/platform-browser": {
+      "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
+      "file": "@angular_platform-browser.js",
+      "fileHash": "afb83f43",
+      "needsInterop": false
+    },
+    "@angular/router": {
+      "src": "../../../../../node_modules/@angular/router/fesm2022/router.mjs",
+      "file": "@angular_router.js",
+      "fileHash": "250b6022",
+      "needsInterop": false
+    },
+    "socket.io-client": {
+      "src": "../../../../../node_modules/socket.io-client/build/esm/index.js",
+      "file": "socket__io-client.js",
+      "fileHash": "b968dd1f",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-PZOP3REL": {
+      "file": "chunk-PZOP3REL.js"
+    },
+    "chunk-VSMNLZXD": {
+      "file": "chunk-VSMNLZXD.js"
+    },
+    "chunk-WXHRFX5Z": {
+      "file": "chunk-WXHRFX5Z.js"
+    },
+    "chunk-X6QWQI3J": {
+      "file": "chunk-X6QWQI3J.js"
+    },
+    "chunk-GLLL6ZVE": {
+      "file": "chunk-GLLL6ZVE.js"
+    }
+  }
+}

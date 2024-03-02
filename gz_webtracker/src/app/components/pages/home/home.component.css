@@ -1,0 +1,12 @@
+.content {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.map-container {
+  min-width: 400px;
+  height: 400px;
+  margin: 0 0 0 20px;
+  padding: 0;
+}

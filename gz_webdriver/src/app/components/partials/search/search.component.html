@@ -1,0 +1,7 @@
+<div style="width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <h2 style="font-size: 2em;">Web driver</h2>
+    <div>
+        <input #s type="text" placeholder="Enter delivery ID" (keyup.enter)="search(s.value)" [value]="searchId" />
+        <button (click)="search(s.value)">Search</button>
+    </div>
+</div>
